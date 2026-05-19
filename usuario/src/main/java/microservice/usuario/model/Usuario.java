@@ -14,11 +14,11 @@ public class Usuario {
     private Long idUsuario;
 
     @Column(length = 50, nullable = false)
-    private String nombre;
+    private String nombreUsuario;
 
     @Column(length = 50, nullable = false)
-    private String apellido;
+    private String apellidoUsuario;
 
     @Column(length = 250, nullable = true, unique = true)
-    private String correo;
+    private String correoUsuario;
 }
