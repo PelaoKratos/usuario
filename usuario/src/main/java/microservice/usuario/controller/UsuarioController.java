@@ -63,7 +63,7 @@ public class UsuarioController {
     }
 
     @PutMapping("{id}")
-    public String putUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+    public Usuario putUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
         return usuarioService.updateUsuario(id,usuario);
     }
 }

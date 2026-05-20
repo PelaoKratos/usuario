@@ -25,5 +25,15 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
 
-
+    public Usuario updateUsuario(Long id, Usuario usuario) {
+        Usuario usuarioExistente = usuarioRepository.findById(id).orElse(null);
+        if (usuarioExistente != null) {
+            usuarioExistente.setNombreUsuario(usuario.getNombreUsuario());
+            usuarioExistente.setApellidoUsuario(usuario.getApellidoUsuario());
+            usuarioExistente.setCorreoUsuario(usuario.getCorreoUsuario());
+            usuarioExistente.setContraseñaUsuario(usuario.getContraseñaUsuario());
+            usuarioExistente.setRolUsuario(usuario.getRolUsuario());
+        }
+        return usuarioRepository.save(usuarioExistente);
+    }
 }
