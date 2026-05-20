@@ -21,4 +21,12 @@ public class Usuario {
 
     @Column(length = 250, nullable = true, unique = true)
     private String correoUsuario;
+
+    @Column(length = 250, nullable = true, unique = true)
+    private String contraseñaUsuario;
+
+    @Column(length = 250, nullable = true, unique = true)
+    private String rolUsuario;
+
+
 }

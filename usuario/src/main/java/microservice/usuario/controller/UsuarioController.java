@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import microservice.usuario.model.Usuario;
 import microservice.usuario.service.UsuarioService;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("api/v1/usuarios")
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
@@ -50,7 +52,7 @@ public class UsuarioController {
 
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Usuario> getUsuario(@PathVariable Long id) {
         Usuario buscado=usuarioService.findById(id).orElse(null); //.orElse controla el tipo Optional<Usuario>
         if(buscado==null)
@@ -58,5 +60,10 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(buscado,HttpStatus.OK);
+    }
+
+    @PutMapping("{id}")
+    public String putUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        return usuarioService.updateUsuario(id,usuario);
     }
 }
