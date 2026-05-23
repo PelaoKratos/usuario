@@ -36,4 +36,12 @@ public class UsuarioService {
         }
         return usuarioRepository.save(usuarioExistente);
     }
+
+    public Usuario deleteUsuario(Long id) {
+        Usuario usuarioExistente = usuarioRepository.findById(id).orElse(null);
+        if (usuarioExistente != null) {
+            usuarioRepository.delete(usuarioExistente);
+        }
+        return usuarioExistente;
+    }
 }
