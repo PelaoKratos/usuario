@@ -30,6 +30,15 @@ public class RoleService {
         return roleRepository.findByNombre(nombre);
     }
 
+    public Role actualizarRole(Long id, Role role) {
+        return roleRepository.findById(id).map(existing -> {
+            existing.setNombre(role.getNombre());
+            existing.setDescripcion(role.getDescripcion());
+            existing.setPermisos(role.getPermisos());
+            return roleRepository.save(existing);
+        }).orElse(null);
+    }
+
     public void eliminarRole(Long id) {
         roleRepository.deleteById(id);
     }

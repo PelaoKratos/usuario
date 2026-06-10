@@ -43,16 +43,16 @@ public class RoleController {
     public ResponseEntity<Role> getRole(@PathVariable Long id) {
         return roleService.findById(id)
                 .map(role -> new ResponseEntity<>(role, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Role> putRole(@PathVariable Long id, @RequestBody Role role) {
-        return roleService.findById(id).map(existing -> {
-            existing.setNombre(role.getNombre());
-            existing.setDescripcion(role.getDescripcion());
-            return new ResponseEntity<>(roleService.guardarRole(existing), HttpStatus.OK);
-        }).orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
+        Role actualizado = roleService.actualizarRole(id, role);
+        if (actualizado == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(actualizado, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -61,6 +61,6 @@ public class RoleController {
             roleService.eliminarRole(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

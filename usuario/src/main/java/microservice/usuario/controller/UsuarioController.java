@@ -58,22 +58,44 @@ public class UsuarioController {
         Usuario buscado=usuarioService.findById(id).orElse(null); //.orElse controla el tipo Optional<Usuario>
         if(buscado==null)
         {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(buscado,HttpStatus.OK);
     }
 
     @PutMapping("{id}")
-    public Usuario putUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
-        return usuarioService.updateUsuario(id, usuario);
+    public ResponseEntity<Usuario> putUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        Usuario actualizado = usuarioService.updateUsuario(id, usuario);
+        if (actualizado == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(actualizado, HttpStatus.OK);
     }
     
     @DeleteMapping("{id}")
     public ResponseEntity<Usuario> deleteUsuario(@PathVariable Long id) {
         Usuario eliminado = usuarioService.deleteUsuario(id);
         if (eliminado == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(eliminado, HttpStatus.OK);
+    }
+
+    @PutMapping("{id}/activar")
+    public ResponseEntity<Usuario> activarUsuario(@PathVariable Long id) {
+        Usuario usuario = usuarioService.activarUsuario(id);
+        if (usuario == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
+    }
+
+    @PutMapping("{id}/desactivar")
+    public ResponseEntity<Usuario> desactivarUsuario(@PathVariable Long id) {
+        Usuario usuario = usuarioService.desactivarUsuario(id);
+        if (usuario == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 }

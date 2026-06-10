@@ -37,9 +37,7 @@ public class UsuarioService {
         if (usuarioExistente == null) {
             return null;
         }
-        usuarioExistente.setNombreUsuario(usuario.getNombreUsuario());
-        usuarioExistente.setApellidoUsuario(usuario.getApellidoUsuario());
-        usuarioExistente.setCorreoUsuario(usuario.getCorreoUsuario());
+        usuarioExistente.actualizarDatos(usuario.getNombreUsuario(), usuario.getApellidoUsuario(), usuario.getCorreoUsuario());
         usuarioExistente.setContraseñaUsuario(usuario.getContraseñaUsuario());
         usuarioExistente.setRolUsuario(resolveRole(usuario.getRolUsuario()));
         return usuarioRepository.save(usuarioExistente);
@@ -51,6 +49,20 @@ public class UsuarioService {
             usuarioRepository.delete(usuarioExistente);
         }
         return usuarioExistente;
+    }
+
+    public Usuario activarUsuario(Long id) {
+        return usuarioRepository.findById(id).map(usuario -> {
+            usuario.activar();
+            return usuarioRepository.save(usuario);
+        }).orElse(null);
+    }
+
+    public Usuario desactivarUsuario(Long id) {
+        return usuarioRepository.findById(id).map(usuario -> {
+            usuario.desactivar();
+            return usuarioRepository.save(usuario);
+        }).orElse(null);
     }
 
     private Role resolveRole(Role role) {
