@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,9 +35,8 @@ public class Session {
     @Column(nullable = false)
     private boolean activa;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    @Column(nullable = false)
+    private Long idUsuario;
 
     public String generarToken() {
         this.token = UUID.randomUUID().toString();

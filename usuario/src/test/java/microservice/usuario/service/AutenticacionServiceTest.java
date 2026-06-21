@@ -41,7 +41,7 @@ class AutenticacionServiceTest {
 
         assertThat(resultado).isPresent();
         assertThat(resultado.get().getToken()).isNotBlank();
-        assertThat(resultado.get().getUsuario()).isEqualTo(usuario);
+        assertThat(resultado.get().getIdUsuario()).isEqualTo(usuario.getIdUsuario());
     }
 
     @Test
@@ -55,7 +55,7 @@ class AutenticacionServiceTest {
 
     @Test
     void logoutCierraSesionYValidaToken() {
-        Session session = new Session(1L, "token", LocalDateTime.now(), LocalDateTime.now().plusHours(1), true, null);
+        Session session = new Session(1L, "token", LocalDateTime.now(), LocalDateTime.now().plusHours(1), true, 1L);
 
         when(sessionRepository.findByToken("token")).thenReturn(Optional.of(session));
         when(sessionRepository.findByToken("otro")).thenReturn(Optional.empty());

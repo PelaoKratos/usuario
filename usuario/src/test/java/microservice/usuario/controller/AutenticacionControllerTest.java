@@ -26,7 +26,7 @@ class AutenticacionControllerTest {
 
     @Test
     void loginRetornaOkOUnauthorized() {
-        Session session = new Session(1L, "token", LocalDateTime.now(), LocalDateTime.now().plusHours(1), true, null);
+        Session session = new Session(1L, "token", LocalDateTime.now(), LocalDateTime.now().plusHours(1), true, 1L);
         AutenticacionController.LoginRequest request = new AutenticacionController.LoginRequest("ana@mail.com", "123");
         AutenticacionController.LoginRequest requestMalo = new AutenticacionController.LoginRequest("ana@mail.com", "mala");
 

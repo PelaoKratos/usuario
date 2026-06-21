@@ -23,7 +23,7 @@ public class AutenticacionService {
                 .filter(usuario -> usuario.iniciarSesion(email, contrasena))
                 .map(usuario -> {
                     Session session = new Session();
-                    session.setUsuario(usuario);
+                    session.setIdUsuario(usuario.getIdUsuario());
                     session.generarToken();
                     return sessionRepository.save(session);
                 });
