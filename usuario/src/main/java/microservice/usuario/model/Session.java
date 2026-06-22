@@ -21,7 +21,7 @@ import java.util.UUID;
 public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idSession;
+    private Long idSesion;
 
     @Column(length = 100, nullable = false, unique = true)
     private String token;
@@ -52,5 +52,13 @@ public class Session {
 
     public boolean validarSesion() {
         return activa && fechaExpiracion != null && fechaExpiracion.isAfter(LocalDateTime.now());
+    }
+
+    public Long getIdSession() {
+        return idSesion;
+    }
+
+    public void setIdSession(Long idSession) {
+        this.idSesion = idSession;
     }
 }

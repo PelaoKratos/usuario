@@ -39,12 +39,15 @@ public class Usuario {
     @Column(length = 250, nullable = true, unique = true)
     private String contraseñaUsuario;
 
+    @Column(name = "id_rol", insertable = false, updatable = false)
+    private Long idRol;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_rol")
     private Role rolUsuario;
 
     @Column(nullable = false)
-    private boolean estado = true;
+    private String estado = "ACTIVO";
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;
@@ -56,7 +59,7 @@ public class Usuario {
         this.apellidoUsuario = apellidoUsuario;
         this.correoUsuario = correoUsuario;
         this.contraseñaUsuario = contraseñaUsuario;
-        this.rolUsuario = rolUsuario;
+        setRolUsuario(rolUsuario);
     }
 
     @PrePersist
@@ -67,7 +70,7 @@ public class Usuario {
     }
 
     public boolean iniciarSesion(String correo, String contraseña) {
-        return estado
+        return isEstado()
                 && correoUsuario != null
                 && contraseñaUsuario != null
                 && correoUsuario.equalsIgnoreCase(correo)
@@ -81,14 +84,51 @@ public class Usuario {
     }
 
     public void desactivar() {
-        this.estado = false;
+        this.estado = "INACTIVO";
     }
 
     public void activar() {
-        this.estado = true;
+        this.estado = "ACTIVO";
     }
 
     public void recuperarContrasena(String nuevaContrasena) {
         this.contraseñaUsuario = nuevaContrasena;
+    }
+
+    public boolean isEstado() {
+        return "ACTIVO".equalsIgnoreCase(estado);
+    }
+
+    public void setEstado(boolean activo) {
+        this.estado = activo ? "ACTIVO" : "INACTIVO";
+    }
+
+    public void setRolUsuario(Role rolUsuario) {
+        this.rolUsuario = rolUsuario;
+        this.idRol = rolUsuario != null ? rolUsuario.getIdRol() : null;
+    }
+
+    public String getNombre() {
+        return nombreUsuario;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombreUsuario = nombre;
+    }
+
+    public String getEmail() {
+        return correoUsuario;
+    }
+
+    public void setEmail(String email) {
+        this.correoUsuario = email;
+    }
+
+    public String getContrasena() {
+        return contraseñaUsuario;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contraseñaUsuario = contrasena;
     }
 }
