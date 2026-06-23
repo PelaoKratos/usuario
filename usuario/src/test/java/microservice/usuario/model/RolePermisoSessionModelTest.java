@@ -61,4 +61,16 @@ class RolePermisoSessionModelTest {
 
         assertThat(session.validarSesion()).isFalse();
     }
+
+    @Test
+    void sessionGestionaIdAliasYValidaSinFecha() {
+        Session session = new Session();
+
+        session.setIdSession(10L);
+        session.setActiva(true);
+        session.setFechaExpiracion(null);
+
+        assertThat(session.getIdSession()).isEqualTo(10L);
+        assertThat(session.validarSesion()).isFalse();
+    }
 }
